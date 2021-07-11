@@ -8,12 +8,14 @@ const client = new Client({
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
   port: 5432,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 client.connect();
 
-client.query("SELECT * from userlist", (err, res) => {
-  console.log(err, res);
+client.query("SELECT * from users", (err, res) => {
+  console.table(res.rows);
   client.end();
 });
